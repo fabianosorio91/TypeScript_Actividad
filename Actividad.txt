@@ -1,0 +1,171 @@
+//Clase
+class Persona
+{
+    id:number=0;
+    nombre:string=""; 
+    apellido:string="";
+    edad:number=0; 
+    usuarios:Array<any>=[]; 
+
+    //constructor vacio 
+    constructor(){}
+
+}
+//interfaz
+interface IUsuario extends Persona{    
+    //metodos
+    getAll():void;
+    getById(id:number):void;
+    getByName(nombre:string):void;
+    create(id: number, nombre: string, apellido:string, edad:number):void;
+    update(id: number, nombre: string, apellido:string, edad:number):void;
+    delete(id:number):void;
+    }
+
+    class RepoPersonas implements IUsuario
+    {       
+        id: number=0;
+        nombre: string = "";
+        apellido: string ="";
+        edad: number= 0;     
+
+        usuarios =[{id:1, nombre: "Fabian", apellido:"osorio", edad:31}]
+
+        //fiel copia de los metodos de IUsuario
+        getAll(): void {
+            for (let x of this.usuarios)
+                alert ("id " + x.id + " Nombre " + x.nombre + " Apellido " + x.apellido + " Edad " + x.edad)      
+        } 
+
+        getById(id:number): void {
+            //datos pedidos por consola
+            id =Number(prompt("Digite el id"));  
+            for (let x of this.usuarios)
+            if(id == x.id){
+                alert ("id " + x.id + " Nombre " + x.nombre + " Apellido " + x.apellido + " Edad " + x.edad)  
+            }else{
+                alert ("Id NO Existe")
+            }       
+        }
+
+        getByName(nombre:string): void {
+              //datos pedidos por consola
+              nombre =String(prompt("Digite el nombre"));            
+
+             for (let x of this.usuarios)
+                 if(x.nombre == nombre){
+                     alert ("id " + x.id + " Nombre " + x.nombre + " Apellido " + x.apellido + " Edad " + x.edad)  
+                 }else{
+                     alert ("Nombre NO Existe")
+            }       
+        }
+
+        create(id: number, nombre: string, apellido:string, edad:number): void {
+                    //datos pedidos por consola
+                    id =Number(prompt("Digite el id"));
+                    nombre =String(prompt("Digite el nombre"));
+                    apellido =String(prompt("Digite el apellido"));
+                    edad =Number(prompt("Digite la edad"));   
+
+            let nuevo:any ={id,nombre,apellido,edad};
+            this.usuarios.push(nuevo) 
+            alert ("Creado")      
+        }
+
+        update(id: number, nombre: string, apellido:string, edad:number): void {
+                    //datos pedidos por consola
+                    id =Number(prompt("Digite el id"));
+                    nombre =String(prompt("Digite el nombre"));
+                    apellido =String(prompt("Digite el apellido"));
+                    edad =Number(prompt("Digite la edad"));
+
+               let x:any = this.usuarios.find(i=> i.id==id)
+            
+               if(x != null)
+               {
+                    x.id=id,
+                    x.nombre = nombre,
+                    x.apellido = apellido,
+                    x.edad = edad,
+                    alert("Editado con Exito");
+                }
+                    else
+                {
+                    alert("No se encontró el Id")
+                }                   
+        }
+
+        delete(id:number): void {
+            //datos pedidos por consola 
+            id =Number(prompt("Digite el id"));  
+
+            let x:any = this.usuarios.find(i=> i.id==id)            
+                 if(x != null)
+                 {
+                    this.usuarios.pop()
+                    alert("Usuario Eliminado")
+                 }
+            else
+                 {
+                    alert ("Id no encontrado")
+                 }            
+        }      
+
+
+    }
+    //instancio la clase para usar sus metodos
+    let ObjRepoPersonas = new RepoPersonas();
+  
+    let opc:number = 0;
+
+     //MENU
+     do {
+            var id:number=0;
+            var nombre:string=""; 
+            var apellido:string="";
+            var edad:number=0; 
+
+            opc = Number (prompt(`
+             Elige una opcion:
+
+            1: Mostrar Todos
+            2: Mostrar x Id
+            3: Mostrar x Nombre
+            4: Crear 
+            5: Actualizar 
+            6: Borrar
+            7: Salir
+             `));
+
+            switch (opc)
+            {
+                case 1:
+                    ObjRepoPersonas.getAll();
+                    break
+                case 2:                  
+                    ObjRepoPersonas.getById(id);
+                    break
+                case 3:                                    
+                    ObjRepoPersonas.getByName(nombre);
+                    break
+                case 4:                
+                    ObjRepoPersonas.create(id,nombre,apellido, edad);
+                    break
+                case 5:              
+                    ObjRepoPersonas.update(id,nombre,apellido, edad);
+                    break
+                case 6:            
+                    ObjRepoPersonas.delete(id);
+                    break
+                case 7:                    
+                   alert ("Gracias");
+
+            }
+        }while(opc != 7)
+       
+
+
+
+
+   
+
